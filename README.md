@@ -3,7 +3,7 @@
 
 <br/>
 
-Using the port-survey.py found in this folder, anyone can scan for open ports on a subnet. The user must have a Shodan account and can access the associated API here: https://developer.shodan.io/
+Using the port-survey.py found in this folder, anyone can scan for open ports on a subnet. The user must have a Shodan account and can access the associated API here: https://account.shodan.io/
 
 ### Python File
 
