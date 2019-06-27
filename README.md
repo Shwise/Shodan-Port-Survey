@@ -34,4 +34,4 @@ Run the script using this command:
 
 <br/><br/>
 
-Please submit any bugs through the Issues tab. Thank you.
+Please submit any bug reports through the Issues tab. Thank you.
