@@ -28,6 +28,6 @@ Any line beginning with a # will be treated as a comment. Empty lines will be ig
 Run the script using this command:
 <br/>```python port-survey.py input.txt output.txt```
 
-<br/>
+<br/><br/>
 
 Please submit any bugs through the Issues tab. Thank you.
