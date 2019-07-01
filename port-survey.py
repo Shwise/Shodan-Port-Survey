@@ -2,6 +2,7 @@ import sys
 from datetime import datetime
 from shodan import Shodan
 from time import sleep
+from telnetlib import Telnet
 
 # Setup
 API_KEY = ''
@@ -79,8 +80,12 @@ for row in rangeList:
             for info in shodanOutput['data']:
                 port = (str(info['port']))
                 if port in desired_Ports:
-                    line = (IP + ":" + port + "\n")
-                    outputFile.write(line)
+                    try:
+                        temp = Telnet(IP, port)
+                        line = (IP + ":" + port + "\n")
+                        outputFile.write(line)
+                    except:
+                        pass
         except:
             pass
             
