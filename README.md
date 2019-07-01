@@ -7,7 +7,7 @@ Using the port-survey.py found in this folder, anyone can scan for open ports on
 
 ### Python File
 
-First, download each of the files. Open the Python file in a text editor and paste your Shodan API key between the single quotes on line 7 ("API_KEY = ''"). Save and close the file.
+First, download each of the files. Open the Python file in a text editor and paste your Shodan API key between the single quotes on line 8 ("API_KEY = ''"). Save and close the file.
 
 Ensure the latest version of Python is installed on your machine.
 
