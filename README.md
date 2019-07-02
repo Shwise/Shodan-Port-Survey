@@ -15,15 +15,20 @@ Ensure the latest version of Python is installed on your machine.
 
 You can now add your own ranges into the input document. The format is as follows:
 
-The first line is optional. Here, one can include comma-separated ports for which to scan. These will override the default list. Example:
-<br/>20, 21, 22, 4443
-
-To only scan for one port, use this format:
-<br/>20, 20
-
-All subsequent lines must include TWO IP addresses, representing the high and low ends of the given subnet. Examples:
+Lines containing IP addresses may include either a single IP address or two IP addresses separated by a /. Examples:
+<br/>192.168.1.1
 <br/>1.1.1.1/8.8.8.8
-<br/>10.10.10.10/10.10.10.10
+<br/>10.10.10.10 / 10.10.10.15
+
+While a default list of ports and modules for which to scan is included, these can individually be overridden at any time by using lines of this format:
+<br/># For ports
+<br/>p = 21, 53, 443
+<br/># For modules
+<br/>m = telnet, x11
+
+To reset use:
+<br/>p = default
+<br/>m = default
 
 Any line beginning with a # will be treated as a comment. Empty lines will be ignored.
 
