@@ -20,7 +20,7 @@ Lines containing IP addresses may include either a single IP address or two IP a
 <br/>1.1.1.1/8.8.8.8
 <br/>10.10.10.10 / 10.10.10.15
 
-While a default list of ports and modules for which to scan is included, these can individually be overridden at any time by using lines of this format:
+While a default list of ports and modules for which to scan is included, these can individually be overridden at any time by using lines of these formats:
 <br/># For ports
 <br/>p = 21, 53, 443
 <br/># For modules
