@@ -13,7 +13,7 @@ Ensure the latest version of Python is installed on your machine.
 
 ### Input File
 
-You can now add your own ranges into the input document. The format is as follows:
+You can now add your own ranges into the input document. The format is as follows.
 
 Lines containing IP addresses may include either a single IP address or two IP addresses separated by a /. Examples:
 ```
