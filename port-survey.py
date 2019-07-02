@@ -10,7 +10,10 @@ api = Shodan(API_KEY)
 input = sys.argv[1]
 output = sys.argv[2]
 time = datetime.now().strftime("%Y-%m-%d %H:%M")
-defaultPorts = ["20", "21", "22", "23", "53", "2000", "3389", "6001"]
+defaultPorts = ["20", "21", "22", "53", "2000", "3389", "6001"]
+defaultModules = ["rdp", "ssh", "ftp", "telnet"]
+desiredPorts = defaultPorts
+desiredModules = defaultModules
 
 # Open the output file
 outputFile = open(output, 'a')
@@ -19,30 +22,48 @@ outputFile.write("Port survey " + time + ":\n")
 # Read lines from input file into list
 rangeList = open(input).read().splitlines()
 
-# List of desired ports
-first_line = rangeList[0].replace(' ', '')
-desired_Ports = first_line.split(",")
-if len(desired_Ports) < 2 or desired_Ports[0][0] == '#':
-    desired_Ports = defaultPorts
-else:
-    rangeList.pop(0)
-print("Scanning for ports: " + ", ".join(desired_Ports))
-
 # Main loop runs on each line from input
 for row in rangeList:
 
-    # Blank lines and comments
-    if row == '' or row[0] == '#':
+    # Blank lines
+    if row == '':
         outputFile.write(row + "\n")
         outputFile.flush()
-        if row != '':
-            print("\n" + row)
         continue
+        
+    charOne = row[0]
+
+    # Comments
+    if charOne == '#':
+        outputFile.write(row + "\n")
+        outputFile.flush()
+        print("\n" + row)
+        continue
+    
+    # Port changes
+    if charOne == "P" or charOne == "p":
+        spacelessRow = row.replace(' ', '')
+        if spacelessRow[1] == "=":
+            desiredPorts = spacelessRow[2:].split(",")
+            if len(desiredPorts) == 1 and desiredPorts[0] == "default":
+                desiredPorts = defaultPorts
+            print("\nScanning for ports: " + ", ".join(desiredPorts))
+            continue
+    
+    # Module changes
+    if charOne == "M" or charOne == "m":
+        spacelessRow = row.replace(' ', '')
+        if spacelessRow[1] == "=":
+            desiredModules = spacelessRow[2:].split(",")
+            if len(desiredModules) == 1 and desiredModules[0] == "default":
+                desiredModules = defaultModules
+            print("\nScanning for modules: " + ", ".join(desiredModules))
+            continue
 
     # Saves a low and high IP for comparison
     subnetArr = []
     entry_int = []
-    entry = row.split("/")
+    entry = row.replace(' ', '').split("/")
     for IP in entry:
         IP_num_arr = IP.split(".")
         for IP_num in IP_num_arr:
@@ -50,6 +71,11 @@ for row in rangeList:
         subnetArr.append(entry_int)
         entry_int = []
         IP_num_arr = []
+        
+    # For signle IP cases
+    if len(subnetArr) == 1:
+        subnetArr.append(subnetArr[0])
+    
     
     x = []
     x.append(subnetArr[0][0])
@@ -79,10 +105,11 @@ for row in rangeList:
             shodanOutput = api.host(IP)
             for info in shodanOutput['data']:
                 port = (str(info['port']))
-                if port in desired_Ports:
+                module = (str(info['_shodan']['module']))
+                if (port in desiredPorts) or (module in desiredModules):
                     try:
                         temp = Telnet(IP, port)
-                        line = (IP + ":" + port + "\n")
+                        line = (IP + ":" + port + "  " + module + "\n")
                         outputFile.write(line)
                     except:
                         pass
