@@ -5,11 +5,15 @@
 
 Using the port-survey.py found in this folder, anyone can scan for open ports on a subnet. The user must have a Shodan account and can access the associated API here: https://account.shodan.io/
 
+<br/>
+
 ### Python File
 
 First, download each of the files. Open the Python file in a text editor and paste your Shodan API key between the single quotes on line 8 ("API_KEY = ''"). Save and close the file.
 
 Ensure the latest version of Python is installed on your machine.
+
+<br/>
 
 ### Input File
 
@@ -37,6 +41,8 @@ To reset use:
 ```
 
 Any line beginning with a # will be treated as a comment. Empty lines will be ignored.
+
+<br/>
 
 ### Running the Script
 
