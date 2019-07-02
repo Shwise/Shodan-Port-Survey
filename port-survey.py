@@ -76,7 +76,6 @@ for row in rangeList:
     if len(subnetArr) == 1:
         subnetArr.append(subnetArr[0])
     
-    
     x = []
     x.append(subnetArr[0][0])
     x.append(subnetArr[0][1])
