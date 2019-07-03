@@ -20,14 +20,14 @@ Ensure the latest version of Python is installed on your machine.
 You can now add your own ranges into the input document. The format is as follows.
 
 Lines containing IP addresses may include either a single IP address or two IP addresses separated by a /. Examples:
-<br/>```
+```
 192.168.1.1
 1.1.1.1/8.8.8.8
 10.10.10.10 / 10.10.10.15
 ```
 
 While a default list of ports and modules for which to scan is included, these can individually be overridden at any time by using lines of these formats:
-<br/>```
+```
 # For ports
 p = 21, 53, 443
 # For modules
@@ -35,7 +35,7 @@ m = telnet, x11
 ```
 
 To reset use:
-<br/>```
+```
 p = default
 m = default
 ```
@@ -47,9 +47,7 @@ Any line beginning with a # will be treated as a comment. Empty lines will be ig
 ### Running the Script
 
 Run the script using this command:
-<br/>```
-python port-survey.py input.txt output.txt
-```
+<br/>```python port-survey.py input.txt output.txt```
 
 <br/><br/>
 
