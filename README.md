@@ -21,23 +21,23 @@ You can now add your own ranges into the input document. The format is as follow
 
 Lines containing IP addresses may include either a single IP address or two IP addresses separated by a /. Examples:
 ```
-<br/>192.168.1.1
-<br/>1.1.1.1/8.8.8.8
-<br/>10.10.10.10 / 10.10.10.15
+192.168.1.1
+1.1.1.1/8.8.8.8
+10.10.10.10 / 10.10.10.15
 ```
 
 While a default list of ports and modules for which to scan is included, these can individually be overridden at any time by using lines of these formats:
 ```
-<br/># For ports
-<br/>p = 21, 53, 443
-<br/># For modules
-<br/>m = telnet, x11
+# For ports
+p = 21, 53, 443
+# For modules
+m = telnet, x11
 ```
 
 To reset use:
 ```
-<br/>p = default
-<br/>m = default
+p = default
+m = default
 ```
 
 Any line beginning with a # will be treated as a comment. Empty lines will be ignored.
