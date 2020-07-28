@@ -50,6 +50,10 @@ Run the script using this command:
 ```
 python port-survey.py input.txt output.txt
 ```
+Or alternatively:
+```
+python3 port-survey.py input.txt output.txt
+```
 
 <br/><br/>
 
