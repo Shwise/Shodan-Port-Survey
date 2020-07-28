@@ -16,6 +16,7 @@ while True:
         api_key_str = input("Please enter your Shodan API key: ")
         api_key_file = open('.shodan_api', 'w')
         api_key_file.write(api_key_str)
+        api_key_file.close()
     if len(api_key_str) == 32:
         break
 
@@ -130,6 +131,11 @@ for row in rangeList:
                             # Cached port has already been closed
                             pass
         except ShodanErr as e:
+            if str(e) == "Invalid API key":
+                api_key_file = open('.shodan_api', 'w')
+                api_key_file.close()
+                print("\nInvalid API key!")
+                exit()
             pass
             
         # Calculates next IP
