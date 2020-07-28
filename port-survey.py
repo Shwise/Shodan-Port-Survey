@@ -1,11 +1,26 @@
 import sys
 from datetime import datetime
 from shodan import Shodan
+from shodan.exception import APIError as ShodanErr
 from time import sleep
 from telnetlib import Telnet
 
+# Prompt user for API Key
+while True:
+    try:
+        api_key_file = open('.shodan_api')
+        api_key_str = api_key_file.read()
+        if len(api_key_str) != 32:
+            raise Exception("Bad API key")
+    except:
+        api_key_str = input("Please enter your Shodan API key: ")
+        api_key_file = open('.shodan_api', 'w')
+        api_key_file.write(api_key_str)
+    if len(api_key_str) == 32:
+        break
+
 # Setup
-API_KEY = ''
+API_KEY = api_key_str
 api = Shodan(API_KEY)
 input = sys.argv[1]
 output = sys.argv[2]
@@ -102,17 +117,19 @@ for row in rangeList:
         # Writes addresses to file
         try:
             shodanOutput = api.host(IP)
-            for info in shodanOutput['data']:
-                port = (str(info['port']))
-                module = (str(info['_shodan']['module']))
-                if (port in desiredPorts) or (module in desiredModules):
-                    try:
-                        temp = Telnet(IP, port)
-                        line = (IP + ":" + port + "  " + module + "\n")
-                        outputFile.write(line)
-                    except:
-                        pass
-        except:
+            if shodanOutput is not None:
+                for info in shodanOutput['data']:
+                    port = (str(info['port']))
+                    module = (str(info['_shodan']['module']))
+                    if (port in desiredPorts) or (module in desiredModules):
+                        try:
+                            temp = Telnet(IP, port, 5)
+                            line = (IP + ":" + port + "  " + module + "\n")
+                            outputFile.write(line)
+                        except TimeoutError as e:
+                            # Cached port has already been closed
+                            pass
+        except ShodanErr as e:
             pass
             
         # Calculates next IP
