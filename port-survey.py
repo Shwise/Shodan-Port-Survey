@@ -1,20 +1,27 @@
 import sys
+import os
 from datetime import datetime
 from shodan import Shodan
 from shodan.exception import APIError as ShodanErr
+from socket import timeout as PortTimeout 
 from time import sleep
 from telnetlib import Telnet
+
+# Store api in same directory as script
+API_FILE_NAME = ".shodan_api"
+absolute_dir = os.path.dirname(__file__)
+API_CACHE = os.path.join(absolute_dir, API_FILE_NAME)
 
 # Prompt user for API Key
 while True:
     try:
-        api_key_file = open('.shodan_api')
+        api_key_file = open(API_CACHE)
         api_key_str = api_key_file.read()
         if len(api_key_str) != 32:
             raise Exception("Bad API key")
     except:
         api_key_str = input("Please enter your Shodan API key: ")
-        api_key_file = open('.shodan_api', 'w')
+        api_key_file = open(API_CACHE, 'w')
         api_key_file.write(api_key_str)
         api_key_file.close()
     if len(api_key_str) == 32:
@@ -23,8 +30,8 @@ while True:
 # Setup
 API_KEY = api_key_str
 api = Shodan(API_KEY)
-input = sys.argv[1]
-output = sys.argv[2]
+input_file_loc = str(input("Path to input file: "))
+output_file_loc = str(input("Path to output file: "))
 time = datetime.now().strftime("%Y-%m-%d %H:%M")
 defaultPorts = ["20", "21", "22", "53", "2000", "3389", "6001"]
 defaultModules = ["rdp", "ssh", "ftp", "telnet"]
@@ -32,11 +39,11 @@ desiredPorts = defaultPorts
 desiredModules = defaultModules
 
 # Open the output file
-outputFile = open(output, 'a')
+outputFile = open(output_file_loc, 'a')
 outputFile.write("Port survey " + time + ":\n")
 
 # Read lines from input file into list
-rangeList = open(input).read().splitlines()
+rangeList = open(input_file_loc).read().splitlines()
 
 # Main loop runs on each line from input
 for row in rangeList:
@@ -127,12 +134,12 @@ for row in rangeList:
                             temp = Telnet(IP, port, 5)
                             line = (IP + ":" + port + "  " + module + "\n")
                             outputFile.write(line)
-                        except TimeoutError as e:
+                        except PortTimeout as e:
                             # Cached port has already been closed
                             pass
         except ShodanErr as e:
             if str(e) == "Invalid API key":
-                api_key_file = open('.shodan_api', 'w')
+                api_key_file = open(API_CACHE, 'w')
                 api_key_file.close()
                 print("\nInvalid API key!")
                 exit()
