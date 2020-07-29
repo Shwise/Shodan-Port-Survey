@@ -11,13 +11,13 @@ Using the port-survey.py found in this folder, anyone can scan for open ports on
 
 Ensure the latest version of Python is installed on your machine.
 
-At the first execution, the program will prompt for an API key, which it will store in the current directory in a text file named '.shodan_api'. To clear the API key, simply delete this folder.
+At the first execution, the program will prompt for a Shodan API key, which it will store in the current directory in a text file named '.shodan_api'. To clear the API key, simply delete this folder.
 
 <br/>
 
 ### Input File
 
-You can now add your own ranges into the input document. The format is as follows.
+Users should add IP ranges into the input document, to be searched for open ports. The format is as follows.
 
 Lines containing IP addresses may include either a single IP address or two IP addresses separated by a /. Examples:
 ```
@@ -41,19 +41,6 @@ m = default
 ```
 
 Any line beginning with a # will be treated as a comment. Empty lines will be ignored.
-
-<br/>
-
-### Running the Script
-
-Run the script using this command:
-```
-python port-survey.py input.txt output.txt
-```
-Or alternatively:
-```
-python3 port-survey.py input.txt output.txt
-```
 
 <br/><br/>
 
