@@ -17,15 +17,17 @@ while True:
     try:
         api_key_file = open(API_CACHE)
         api_key_str = api_key_file.read()
-        if len(api_key_str) != 32:
+        if len(api_key_str) < 1 or len(api_key_str) > 1000:
             raise Exception("Bad API key")
     except:
         api_key_str = input("Please enter your Shodan API key: ")
         api_key_file = open(API_CACHE, 'w')
         api_key_file.write(api_key_str)
         api_key_file.close()
-    if len(api_key_str) == 32:
+    if len(api_key_str) > 1 and len(api_key_str) < 1000:
         break
+    else:
+        print("Invalid API key. Please try again.")
 
 # Setup
 API_KEY = api_key_str
