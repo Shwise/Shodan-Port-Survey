@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from shodan import Shodan
 from shodan.exception import APIError as ShodanErr
-from socket import timeout as PortTimeout 
+from socket import timeout as PortTimeout
 from time import sleep
 from telnetlib import Telnet
 
@@ -136,7 +136,7 @@ for row in rangeList:
                             temp = Telnet(IP, port, 5)
                             line = (IP + ":" + port + "  " + module + "\n")
                             outputFile.write(line)
-                        except PortTimeout as e:
+                        except (PortTimeout, ConnectionError) as e:
                             # Cached port has already been closed
                             pass
         except ShodanErr as e:
